@@ -88,8 +88,11 @@ public final class MainActivity extends Activity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Some OEM builds (Realme/ColorOS) create the decor view lazily.
+            // Asking the window for its controller before that throws an NPE.
+            View decor = window.getDecorView();
             window.setDecorFitsSystemWindows(false);
-            WindowInsetsController controller = window.getInsetsController();
+            WindowInsetsController controller = decor.getWindowInsetsController();
             if (controller != null) {
                 controller.setSystemBarsAppearance(
                         0,
