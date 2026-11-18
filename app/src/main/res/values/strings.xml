@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ampere</string>
+    <string name="tagline">Battery current meter</string>
+    <string name="net_label">Net current</string>
+    <string name="in_label">In</string>
+    <string name="out_label">Out</string>
+    <string name="unit">mA</string>
+    <string name="status_charging">Charging</string>
+    <string name="status_discharging">Discharging</string>
+    <string name="status_idle">Idle</string>
+    <string name="status_full">Full</string>
+    <string name="status_no_sensor">Sensor unavailable</string>
+    <string name="battery_level">Battery %1$d%%</string>
+    <string name="equation">In − Out = Net</string>
+    <string name="update_rate">Updates every second</string>
+    <string name="a11y_summary">Net %1$s mA. In %2$s mA. Out %3$s mA. Battery %4$d%%. %5$s.</string>
+    <string name="a11y_no_sensor">Current sensor not available. Battery %1$d%%.</string>
+</resources>

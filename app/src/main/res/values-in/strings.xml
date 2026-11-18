@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tagline">Meteran arus baterai</string>
+    <string name="net_label">Arus bersih</string>
+    <string name="in_label">Masuk</string>
+    <string name="out_label">Keluar</string>
+    <string name="status_charging">Mengisi</string>
+    <string name="status_discharging">Mengosongkan</string>
+    <string name="status_idle">Siaga</string>
+    <string name="status_full">Penuh</string>
+    <string name="status_no_sensor">Sensor tidak tersedia</string>
+    <string name="battery_level">Baterai %1$d%%</string>
+    <string name="equation">Masuk − Keluar = Net</string>
+    <string name="update_rate">Diperbarui tiap detik</string>
+    <string name="a11y_summary">Arus bersih %1$s mA. Masuk %2$s mA. Keluar %3$s mA. Baterai %4$d%%. %5$s.</string>
+    <string name="a11y_no_sensor">Sensor arus tidak tersedia. Baterai %1$d%%.</string>
+</resources>
