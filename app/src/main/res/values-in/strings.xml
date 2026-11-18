@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Ampere</string>
     <string name="tagline">Meteran arus baterai</string>
     <string name="net_label">Arus bersih</string>
     <string name="in_label">Masuk</string>
