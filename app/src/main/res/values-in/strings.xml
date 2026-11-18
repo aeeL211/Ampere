@@ -5,6 +5,7 @@
     <string name="net_label">Arus bersih</string>
     <string name="in_label">Masuk</string>
     <string name="out_label">Keluar</string>
+    <string name="unit">mA</string>
     <string name="status_charging">Mengisi</string>
     <string name="status_discharging">Mengosongkan</string>
     <string name="status_idle">Siaga</string>
