@@ -34,6 +34,8 @@ di-shrink oleh R8 sampai ukuran puluhan KB.
 
 Ukuran build terakhir: **±63 KB** untuk APK debug yang bisa langsung dipasang, dan **±16 KB** untuk APK release yang sudah di-minify (unsigned). APK debug tersedia sebagai artifact dari setiap build di tab **Actions**.
 
+**[Unduh APK siap pasang](https://github.com/aeeL211/Ampere/releases/latest)** (±63 KB, ditandatangani dengan debug key).
+
 ## Build
 
 Semua build berat dijalankan oleh GitHub Actions (`.github/workflows/build.yml`) agar
