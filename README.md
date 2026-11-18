@@ -32,7 +32,7 @@ Pada satu waktu hanya satu arah yang bernilai bukan nol. Ini memang sifat sensor
 baterai, bukan bug. Aplikasi memakai API framework saja, jadi APK rilis dapat
 di-shrink oleh R8 sampai ukuran puluhan KB.
 
-APK debug tersedia sebagai artifact dari setiap build di tab **Actions**.
+Ukuran build terakhir: **±63 KB** untuk APK debug yang bisa langsung dipasang, dan **±16 KB** untuk APK release yang sudah di-minify (unsigned). APK debug tersedia sebagai artifact dari setiap build di tab **Actions**.
 
 ## Build
 

@@ -42,6 +42,10 @@ jobs:
       - name: Build debug and release, run lint
         run: ./gradlew --no-daemon --stacktrace assembleDebug assembleRelease lintDebug
 
+      - name: Print lint warnings
+        if: always()
+        run: cat app/build/reports/lint-results-debug.txt || true
+
       - name: Report APK size
         run: ls -lh app/build/outputs/apk/debug/*.apk app/build/outputs/apk/release/*.apk
 
