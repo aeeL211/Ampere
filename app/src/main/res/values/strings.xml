@@ -11,7 +11,6 @@
     <string name="status_idle">Idle</string>
     <string name="status_full">Full</string>
     <string name="status_no_sensor">Sensor unavailable</string>
-    <string name="battery_level">Battery %1$d%%</string>
     <string name="equation">In − Out = Net</string>
     <string name="update_rate">Updates every second</string>
     <string name="a11y_summary">Net %1$s mA. In %2$s mA. Out %3$s mA. Battery %4$d%%. %5$s.</string>
