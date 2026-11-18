@@ -5,9 +5,7 @@
     <color name="surface_container_high">#2B2930</color>
     <color name="on_surface">#E6E0E9</color>
     <color name="on_surface_variant">#CAC4D0</color>
-    <color name="outline">#49454F</color>
     <color name="primary">#D0BCFF</color>
-    <color name="on_primary">#381E72</color>
     <color name="charge">#7EE2A8</color>
     <color name="drain">#FFB4AB</color>
     <color name="idle">#CAC4D0</color>
