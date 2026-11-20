@@ -55,7 +55,7 @@ final class BatteryReader {
         if (Math.abs(microAmps) >= 30_000L) {
             nativeMicroAmps = true;
         } else if (Math.abs(microAmps) < 10_000L
-                && !nativeMicroAmps && !mayBeSmallCurrent(status)) {
+                && !nativeMicroAmps && !mayBeSmallCurrent(status, plugged)) {
             microAmps *= 1000L;
         }
 
@@ -65,10 +65,14 @@ final class BatteryReader {
     }
 
     /**
-     * A full or paused charge has a genuinely tiny net current. Trust the
-     * documented microamp unit there instead of turning 8 mA into 8 A.
+     * A plugged-in battery at full or with charging paused has a genuinely
+     * tiny net current. Trust the documented microamp unit there instead of
+     * turning 8 mA into 8 A.
      */
-    private static boolean mayBeSmallCurrent(int status) {
+    private static boolean mayBeSmallCurrent(int status, int plugged) {
+        if (plugged == 0) {
+            return false;
+        }
         return status == BatteryManager.BATTERY_STATUS_FULL
                 || status == BatteryManager.BATTERY_STATUS_NOT_CHARGING;
     }
