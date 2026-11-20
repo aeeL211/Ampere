@@ -68,7 +68,8 @@ sdkmanager --install "platforms;android-37.0" "build-tools;37.0.0"
 `BatteryManager.getIntProperty(BATTERY_PROPERTY_CURRENT_NOW)` mengembalikan arus bersih
 dalam mikroampere. Nilai positif berarti arus masuk ke baterai, negatif berarti keluar.
 Beberapa perangkat mengembalikan miliampere atau membalik tanda; `BatteryReader`
-menormalkan keduanya berdasarkan status pengisian dan status colokan.
+menormalkan keduanya berdasarkan status pengisian dan status colokan, sehingga arus
+mengisi selalu positif dan arus mengosongkan selalu negatif.
 
 Tidak ada foreground service dan tidak ada polling di background. Pembaruan berhenti
 saat activity di-pause.

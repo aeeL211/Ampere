@@ -42,6 +42,7 @@ public final class AmpereView extends View {
     private final int idle;
 
     private Reading reading;
+    private boolean hasReading;
 
     public AmpereView(Context context) {
         super(context);
@@ -62,10 +63,14 @@ public final class AmpereView extends View {
     }
 
     public void setReading(Reading newReading) {
-        if (newReading == null || newReading.equals(reading)) {
+        if (newReading == null) {
+            return;
+        }
+        if (hasReading && newReading.equals(reading)) {
             return;
         }
         reading = newReading;
+        hasReading = true;
         describe(reading);
         invalidate();
     }
@@ -292,20 +297,11 @@ public final class AmpereView extends View {
         if (reading.netUa() < 0) {
             return drain;
         }
-        return reading.full() ? charge : idle;
+        return reading.full() && reading.plugged() != 0 ? charge : idle;
     }
 
     private int chipAccent() {
-        if (!reading.supported()) {
-            return idle;
-        }
-        if (reading.netUa() > 0) {
-            return charge;
-        }
-        if (reading.netUa() < 0) {
-            return drain;
-        }
-        return idle;
+        return statusAccent();
     }
 
     private String statusLabel() {
@@ -326,7 +322,7 @@ public final class AmpereView extends View {
 
     private void describe(Reading reading) {
         Context context = getContext();
-        int level = Math.max(reading.level(), 0);
+        int level = Math.min(Math.max(reading.level(), 0), 100);
         if (!reading.supported()) {
             setContentDescription(context.getString(R.string.a11y_no_sensor, level));
             return;
@@ -345,12 +341,19 @@ public final class AmpereView extends View {
     }
 
     private static String milliAmps(long microAmps) {
-        return Long.toString(Math.round(microAmps / 1000.0));
+        return Long.toString(roundToMilliAmps(microAmps));
     }
 
     private static String netValue(long microAmps) {
-        long milliAmps = Math.round(microAmps / 1000.0);
+        long milliAmps = roundToMilliAmps(microAmps);
         return milliAmps > 0L ? "+" + milliAmps : Long.toString(milliAmps);
+    }
+
+    /** Rounds half away from zero so In − Out = Net also holds after rounding. */
+    private static long roundToMilliAmps(long microAmps) {
+        long magnitude = Math.abs(microAmps);
+        long rounded = (magnitude + 500L) / 1000L;
+        return microAmps < 0L ? -rounded : rounded;
     }
 
     private void drawText(Canvas canvas, String text, float x, float baseline, float size,

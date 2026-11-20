@@ -10,6 +10,9 @@ import android.os.BatteryManager;
  */
 final class BatteryReader {
 
+    /** True once a raw reading proved that the sensor reports microamperes. */
+    private static volatile boolean nativeMicroAmps;
+
     private BatteryReader() {
     }
 
@@ -47,18 +50,44 @@ final class BatteryReader {
         long microAmps = raw;
 
         // The platform contract is microamperes, but a few OEMs expose milliamps.
-        // Screen-on currents are well above 10 mA, so small values are milliamps.
-        if (Math.abs(microAmps) < 10_000L) {
+        // 30 A is beyond any phone, so such a reading proves microamperes; remember
+        // that so a later small reading is not inflated 1,000x.
+        if (Math.abs(microAmps) >= 30_000L) {
+            nativeMicroAmps = true;
+        } else if (Math.abs(microAmps) < 10_000L
+                && !nativeMicroAmps && !mayBeSmallCurrent(status)) {
             microAmps *= 1000L;
         }
 
-        // Normalize vendor sign conventions. Current cannot enter the battery
-        // while unplugged, or leave it while the platform says it is discharging.
-        if (microAmps > 0L
-                && (plugged == 0 || status == BatteryManager.BATTERY_STATUS_DISCHARGING)) {
-            microAmps = -microAmps;
-        }
+        microAmps = normalizeSign(microAmps, status, plugged);
 
         return new Reading(microAmps, level, status, plugged, true);
+    }
+
+    /**
+     * A full or paused charge has a genuinely tiny net current. Trust the
+     * documented microamp unit there instead of turning 8 mA into 8 A.
+     */
+    private static boolean mayBeSmallCurrent(int status) {
+        return status == BatteryManager.BATTERY_STATUS_FULL
+                || status == BatteryManager.BATTERY_STATUS_NOT_CHARGING;
+    }
+
+    /**
+     * Some vendor kernels invert the documented sign. The charging state is
+     * the source of truth: current cannot enter an unplugged, discharging, or
+     * explicitly not-charging battery.
+     */
+    private static long normalizeSign(long microAmps, int status, int plugged) {
+        if (plugged == 0
+                || status == BatteryManager.BATTERY_STATUS_DISCHARGING
+                || status == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
+            return -Math.abs(microAmps);
+        }
+        if (status == BatteryManager.BATTERY_STATUS_CHARGING
+                || status == BatteryManager.BATTERY_STATUS_FULL) {
+            return Math.abs(microAmps);
+        }
+        return microAmps;
     }
 }
